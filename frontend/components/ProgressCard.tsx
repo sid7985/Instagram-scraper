@@ -22,27 +22,27 @@ export default function ProgressCard({
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="surface-card rounded-xl p-md flex flex-col gap-sm"
+      className="surface-card rounded-xl p-3 sm:p-md flex flex-col gap-sm"
     >
-      <div className="flex justify-between items-end">
-        <div>
-          <h2 className="text-headline-md text-on-background">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1">
+        <div className="min-w-0">
+          <h2 className="text-headline-sm sm:text-headline-md text-on-background">
             {running ? "Extracting Data..." : "Progress"}
           </h2>
-          <p className="text-body-md text-on-surface-variant mt-xs">
+          <p className="text-body-md text-on-surface-variant mt-xs truncate">
             Row {currentRow} / {total}
             {currentUsername && (
               <>
-                <span className="mx-2">&bull;</span>
-                Current: @{currentUsername}
+                <span className="mx-2 hidden sm:inline">&bull;</span>
+                <span className="hidden sm:inline">Current: @{currentUsername}</span>
               </>
             )}
           </p>
         </div>
-        <div className="font-mono text-metric-xl text-primary">{percent}%</div>
+        <div className="font-mono text-[32px] sm:text-[40px] md:text-metric-xl leading-none text-primary shrink-0">{percent}%</div>
       </div>
 
-      <div className="h-4 bg-surface-container-lowest rounded-full overflow-hidden mt-sm border border-outline-variant/50">
+      <div className="h-3 sm:h-4 bg-surface-container-lowest rounded-full overflow-hidden mt-sm border border-outline-variant/50">
         <motion.div
           className="h-full bg-primary rounded-full transition-all duration-300 ease-out"
           style={{

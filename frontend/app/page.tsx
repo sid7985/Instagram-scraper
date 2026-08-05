@@ -217,20 +217,20 @@ export default function Dashboard() {
       />
 
       {/* Main Content Wrapper with sidebar offset */}
-      <div className="flex-1 flex flex-col lg:ml-64 w-full min-h-[calc(100vh-64px)] relative">
-        <main className="flex-1 p-margin-mobile lg:p-margin-desktop max-w-7xl mx-auto w-full">
+      <div className="flex-1 flex flex-col lg:ml-64 w-full min-h-[calc(100vh-56px)] sm:min-h-[calc(100vh-64px)] relative">
+        <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:p-margin-desktop max-w-7xl mx-auto w-full">
           {activeView === "dashboard" ? (
             <>
               {/* Dashboard Header & Status */}
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-lg gap-md">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 sm:mb-lg gap-2 sm:gap-md">
                 <div>
-                  <h2 className="text-headline-lg text-on-background mb-xs">Data Pipeline</h2>
+                  <h2 className="text-headline-sm sm:text-headline-lg text-on-background mb-xs">Data Pipeline</h2>
                   <p className="text-body-md text-on-surface-variant">
-                    Manage and process your bulk analytics uploads.
+                    Manage and process your analytics uploads.
                   </p>
                 </div>
                 {/* Session Status Card */}
-                <div className="surface-card rounded-lg px-md py-sm flex items-center gap-sm">
+                <div className="surface-card rounded-lg px-3 sm:px-md py-1.5 sm:py-sm flex items-center gap-2 sm:gap-sm">
                   <div
                     className={`w-2 h-2 rounded-full ${
                       session.set
@@ -239,14 +239,14 @@ export default function Dashboard() {
                     }`}
                   />
                   <div>
-                    <span className="text-label-md text-on-surface-variant block mb-[2px]">
+                    <span className="text-[10px] sm:text-label-md text-on-surface-variant block mb-[2px]">
                       Session Status
                     </span>
-                    <span className="text-body-md font-semibold text-on-surface flex items-center gap-xs">
+                    <span className="text-body-md font-semibold text-on-surface flex items-center gap-1 sm:gap-xs">
                       {session.set ? (
                         <>
                           Logged In
-                          <span className="material-symbols-outlined text-[16px] text-emerald-500">check_circle</span>
+                          <span className="material-symbols-outlined text-[14px] sm:text-[16px] text-emerald-500">check_circle</span>
                         </>
                       ) : (
                         "Not Connected"
@@ -260,14 +260,14 @@ export default function Dashboard() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="surface-card rounded-xl mb-6 flex items-center gap-3 border-error/40 bg-error/10 px-md py-sm"
+                  className="surface-card rounded-xl mb-4 sm:mb-6 flex items-start sm:items-center gap-2 sm:gap-3 border-error/40 bg-error/10 px-3 sm:px-md py-2 sm:py-sm"
                 >
-                  <XCircle className="h-4 w-4 shrink-0 text-error" />
-                  <div>
-                    <p className="text-sm font-semibold text-error">Backend unreachable</p>
-                    <p className="text-xs text-on-surface-variant">
+                  <XCircle className="h-4 w-4 shrink-0 text-error mt-0.5 sm:mt-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm font-semibold text-error">Backend unreachable</p>
+                    <p className="text-[10px] sm:text-xs text-on-surface-variant break-all">
                       {API_BASE
-                        ? `Could not reach ${API_BASE}. Check the backend service is running.`
+                        ? `Could not reach ${API_BASE}. Check the backend service.`
                         : "No API URL configured. Set NEXT_PUBLIC_API_URL on Vercel."}
                     </p>
                   </div>
@@ -278,13 +278,13 @@ export default function Dashboard() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="surface-card rounded-xl mb-6 flex items-center gap-3 border-error/40 bg-error/10 px-md py-sm"
+                  className="surface-card rounded-xl mb-4 sm:mb-6 flex items-start sm:items-center gap-2 sm:gap-3 border-error/40 bg-error/10 px-3 sm:px-md py-2 sm:py-sm"
                 >
-                  <XCircle className="h-4 w-4 shrink-0 text-error" />
-                  <p className="text-sm text-error">{error}</p>
+                  <XCircle className="h-4 w-4 shrink-0 text-error mt-0.5 sm:mt-0" />
+                  <p className="text-xs sm:text-sm text-error min-w-0 break-all">{error}</p>
                   <button
                     onClick={() => setError(null)}
-                    className="ml-auto text-xs text-on-surface-variant hover:text-on-surface"
+                    className="ml-auto text-xs text-on-surface-variant hover:text-on-surface shrink-0"
                   >
                     Dismiss
                   </button>
@@ -292,9 +292,9 @@ export default function Dashboard() {
               )}
 
               {/* Bento Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-gutter">
                 {/* Metrics Cluster (4 cols) */}
-                <div className="md:col-span-4 grid grid-cols-2 gap-sm">
+                <div className="md:col-span-4 grid grid-cols-2 gap-2 sm:gap-sm">
                   <StatCard title="Total URLs" value={job?.total ?? 0} icon={FileSpreadsheet} accent="primary" />
                   <StatCard title="Success" value={job?.success ?? 0} icon={Download} accent="success" />
                   <StatCard title="Failed" value={job?.failed ?? 0} icon={ListX} accent="danger" />
@@ -313,7 +313,7 @@ export default function Dashboard() {
 
               {/* Actions */}
               {file && !job && (
-                <div className="mt-md flex items-center gap-sm">
+                <div className="mt-3 sm:mt-md flex items-center gap-sm">
                   {uploading ? (
                     <button className="btn-primary" disabled>
                       <Loader2 className="h-4 w-4 animate-spin" /> Uploading...
@@ -337,7 +337,7 @@ export default function Dashboard() {
 
               {/* Progress + logs */}
               {job && !TERMINAL_STATES.includes(job.status) && (
-                <div className="mt-md">
+                <div className="mt-3 sm:mt-md">
                   <ProgressCard
                     percent={percent}
                     currentRow={job.current_row || job.done}
@@ -352,10 +352,10 @@ export default function Dashboard() {
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="surface-card rounded-xl mt-md flex flex-col items-center gap-4 p-8 text-center"
+                  className="surface-card rounded-xl mt-3 sm:mt-md flex flex-col items-center gap-3 sm:gap-4 p-4 sm:p-8 text-center"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/10">
-                    <Download className="h-6 w-6 text-emerald-500" />
+                  <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-emerald-500/10">
+                    <Download className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-500" />
                   </div>
                   <div>
                     <h3 className="text-headline-sm text-on-surface">Processing complete</h3>
@@ -363,7 +363,7 @@ export default function Dashboard() {
                       {job.success} successful &middot; {job.failed} failed &middot; {job.elapsed_sec}s
                     </p>
                   </div>
-                  <a href={downloadUrl(job.id)} className="btn-primary">
+                  <a href={downloadUrl(job.id)} className="btn-primary w-full sm:w-auto">
                     <Download className="h-4 w-4" />
                     Download {job.output_filename}
                   </a>
@@ -374,21 +374,21 @@ export default function Dashboard() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="surface-card rounded-xl mt-md border-yellow-500/30 bg-yellow-500/5 px-md py-sm text-sm text-yellow-400"
+                  className="surface-card rounded-xl mt-3 sm:mt-md border-yellow-500/30 bg-yellow-500/5 px-3 sm:px-md py-2 sm:py-sm text-xs sm:text-sm text-yellow-400"
                 >
                   Session expired — the job is paused. Paste a new Session ID to resume.
                 </motion.div>
               )}
 
               {job?.status === "failed" && (
-                <div className="surface-card rounded-xl mt-md px-md py-sm text-sm text-error">
+                <div className="surface-card rounded-xl mt-3 sm:mt-md px-3 sm:px-md py-2 sm:py-sm text-xs sm:text-sm text-error">
                   Job failed: {job.error}
                 </div>
               )}
 
               {/* Logs */}
               {job && (
-                <div className="mt-md">
+                <div className="mt-3 sm:mt-md">
                   <LiveLogs logs={job.logs} />
                 </div>
               )}
@@ -396,14 +396,14 @@ export default function Dashboard() {
           ) : (
             /* Settings View */
             <>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-lg gap-md">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 sm:mb-lg gap-2 sm:gap-md">
                 <div>
-                  <h1 className="text-headline-lg text-on-surface mb-xs">
+                  <h1 className="text-headline-sm sm:text-headline-lg text-on-surface mb-xs">
                     Settings & Metrics
                   </h1>
                   <p className="text-body-md text-on-surface-variant max-w-2xl">
-                    Configure data collection parameters, select target metrics, and define export
-                    preferences for your scraping tasks.
+                    Configure data collection, select target metrics, and define export
+                    preferences.
                   </p>
                 </div>
               </div>

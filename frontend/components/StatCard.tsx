@@ -25,20 +25,20 @@ export default function StatCard({ title, value, icon: Icon, accent = "primary",
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="surface-card rounded-xl p-md flex flex-col justify-between relative overflow-hidden"
+      className="surface-card rounded-xl p-3 sm:p-md flex flex-col justify-between relative overflow-hidden"
     >
       {colors.glow && (
-        <div className={`absolute -right-4 -top-4 w-24 h-24 ${colors.glow} rounded-full blur-xl`} />
+        <div className={`absolute -right-4 -top-4 w-20 sm:w-24 h-20 sm:h-24 ${colors.glow} rounded-full blur-xl`} />
       )}
-      <div className="flex justify-between items-start mb-md relative z-10">
-        <span className="text-label-md text-on-surface-variant uppercase tracking-wider">
+      <div className="flex justify-between items-start mb-2 sm:mb-md relative z-10">
+        <span className="text-[10px] sm:text-label-md text-on-surface-variant uppercase tracking-wider">
           {title}
         </span>
-        <Icon className={`h-5 w-5 ${colors.text} opacity-80`} />
+        <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${colors.text} opacity-80`} />
       </div>
       <div className="relative z-10">
-        <span className="font-mono text-metric-xl text-on-background">{value}</span>
-        {sub && <p className="mt-1 text-xs text-on-surface-variant">{sub}</p>}
+        <span className="font-mono text-[32px] sm:text-[40px] md:text-metric-xl leading-none text-on-background">{value}</span>
+        {sub && <p className="mt-1 text-[10px] sm:text-xs text-on-surface-variant">{sub}</p>}
       </div>
     </motion.div>
   );

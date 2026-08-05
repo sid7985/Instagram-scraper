@@ -31,22 +31,22 @@ export default function Header({ loggedIn, onManageSession, activeView, onNaviga
   return (
     <>
       {/* Top App Bar */}
-      <header className="sticky top-0 z-50 flex justify-between items-center px-6 lg:px-margin-desktop h-16 w-full bg-background/80 backdrop-blur-md border-b border-outline-variant">
-        <div className="flex items-center gap-md">
+      <header className="sticky top-0 z-50 flex justify-between items-center px-4 sm:px-6 lg:px-margin-desktop h-14 sm:h-16 w-full bg-background/80 backdrop-blur-md border-b border-outline-variant">
+        <div className="flex items-center gap-2 sm:gap-md min-w-0">
           <button
             onClick={() => setMobileOpen(true)}
-            className="lg:hidden p-xs text-on-surface-variant hover:text-primary transition-colors"
+            className="lg:hidden p-xs text-on-surface-variant hover:text-primary transition-colors shrink-0"
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
-          <h1 className="text-headline-md font-bold text-on-background tracking-tight">
-            Instagram Analytics Pro
+          <h1 className="text-headline-sm sm:text-headline-md font-bold text-on-background tracking-tight truncate">
+            Instagram Analytics
           </h1>
         </div>
-        <div className="flex items-center gap-sm">
+        <div className="flex items-center gap-sm shrink-0">
           <button
             onClick={onManageSession}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high"
+            className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high"
             title="Manage session"
           >
             <span
@@ -56,11 +56,11 @@ export default function Header({ loggedIn, onManageSession, activeView, onNaviga
             />
             {loggedIn ? (
               <>
-                <BadgeCheck className="h-4 w-4 text-emerald-500" />
+                <BadgeCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-500" />
                 <span className="hidden sm:inline">Logged In</span>
               </>
             ) : (
-              "Session Required"
+              <span className="hidden xs:inline">Session Required</span>
             )}
           </button>
         </div>
