@@ -150,7 +150,7 @@ class InstagramScraper:
 
     def validate_session(self) -> bool:
         try:
-            self._loader.get_profile("instagram")
+            instaloader.Profile.from_username(self._loader.context, "instagram")
             return True
         except instaloader.exceptions.LoginRequiredException:
             return False
@@ -180,7 +180,7 @@ class InstagramScraper:
         for attempt, delay in enumerate(RETRY_DELAYS + [0]):
             try:
                 self.rotate_user_agent()
-                profile = self._loader.get_profile(username)
+                profile = instaloader.Profile.from_username(self._loader.context, username)
                 data = self._profile_data(profile, url)
                 self._sleep()
                 return data
@@ -310,7 +310,9 @@ class InstagramScraper:
 
     def _profile(self, username: str) -> instaloader.Profile:
         if username not in self._profile_cache:
-            self._profile_cache[username] = self._loader.get_profile(username)
+            self._profile_cache[username] = instaloader.Profile.from_username(
+                self._loader.context, username
+            )
         return self._profile_cache[username]
 
     def _sleep(self) -> None:
