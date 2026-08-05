@@ -34,6 +34,13 @@ RESULT_COLUMNS = [
     ("last_updated", "Last Updated"),
 ]
 
+COMPUTED_COLUMNS = [
+    ("Engagement Rate (%)", "engagement_rate"),
+    ("Like-to-Follower Ratio", "like_follower_ratio"),
+    ("View-to-Follower Ratio", "view_follower_ratio"),
+    ("Comment-to-Like Ratio", "comment_like_ratio"),
+]
+
 STATUS_OK = "OK"
 
 
@@ -59,6 +66,54 @@ def _build_rows(original_df: pd.DataFrame, url_rows: list, results: dict) -> pd.
     return df
 
 
+def _compute_metrics(df: pd.DataFrame) -> pd.DataFrame:
+    """Add computed engagement metrics to the dataframe."""
+
+    def safe_float(val):
+        try:
+            if val is None or val == "" or val == "None":
+                return None
+            return float(val)
+        except (ValueError, TypeError):
+            return None
+
+    def compute_engagement_rate(row):
+        likes = safe_float(row.get("Likes"))
+        comments = safe_float(row.get("Comments"))
+        followers = safe_float(row.get("Followers"))
+        if followers and followers > 0 and likes is not None and comments is not None:
+            return round(((likes + comments) / followers) * 100, 2)
+        return None
+
+    def compute_like_follower_ratio(row):
+        likes = safe_float(row.get("Likes"))
+        followers = safe_float(row.get("Followers"))
+        if followers and followers > 0 and likes is not None:
+            return round(likes / followers, 4)
+        return None
+
+    def compute_view_follower_ratio(row):
+        views = safe_float(row.get("Views"))
+        followers = safe_float(row.get("Followers"))
+        if followers and followers > 0 and views is not None:
+            return round(views / followers, 4)
+        return None
+
+    def compute_comment_like_ratio(row):
+        comments = safe_float(row.get("Comments"))
+        likes = safe_float(row.get("Likes"))
+        if likes and likes > 0 and comments is not None:
+            return round(comments / likes, 4)
+        return None
+
+    df["Engagement Rate (%)"] = df.apply(compute_engagement_rate, axis=1)
+    df["Like-to-Follower Ratio"] = df.apply(compute_like_follower_ratio, axis=1)
+    df["View-to-Follower Ratio"] = df.apply(compute_view_follower_ratio, axis=1)
+    df["Comment-to-Like Ratio"] = df.apply(compute_comment_like_ratio, axis=1)
+
+    return df
+
+
 def write_results(
     original_df: pd.DataFrame,
     url_rows: list,
@@ -69,10 +124,14 @@ def write_results(
 ) -> Path:
     """Generate the results workbook and return its path."""
     df = _build_rows(original_df, url_rows, results)
+    df = _compute_metrics(df)
 
     total = len(url_rows)
     success = sum(1 for u in url_rows if results.get(u.url, {}).get("status") == STATUS_OK)
     failed = total - success
+
+    engagement_values = df["Engagement Rate (%)"].dropna()
+    avg_engagement = round(engagement_values.mean(), 2) if len(engagement_values) > 0 else "N/A"
 
     summary = {
         "Metric": [
@@ -83,6 +142,7 @@ def write_results(
             "Finished At",
             "Processing Time (sec)",
             "Avg Speed (URLs/min)",
+            "Avg Engagement Rate (%)",
             "Generated At",
         ],
         "Value": [
@@ -93,6 +153,7 @@ def write_results(
             _fmt(finished_at),
             round((finished_at - started_at).total_seconds(), 1),
             round(success / max((finished_at - started_at).total_seconds() / 60, 1e-9), 2),
+            avg_engagement,
             _fmt(datetime.now(timezone.utc)),
         ],
     }

@@ -51,31 +51,31 @@ export default function SessionModal({ kind, onClose, onSave }: SessionModalProp
           initial={{ scale: 0.95, y: 12 }}
           animate={{ scale: 1, y: 0 }}
           exit={{ scale: 0.95, y: 12 }}
-          className="card w-full max-w-md border-accent/30 p-6"
+          className="surface-card rounded-xl w-full max-w-md border-primary/30 p-md shadow-[0_0_30px_rgba(192,193,255,0.1)]"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-start justify-between">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10">
-              <KeyRound className="h-5 w-5 text-accent" />
+            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+              <KeyRound className="h-6 w-6 text-primary" />
             </div>
             <button
               onClick={onClose}
-              className="rounded-lg p-1 text-gray-500 transition hover:bg-[#222222] hover:text-white"
+              className="rounded-lg p-1 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </button>
           </div>
 
-          <h2 className="mt-4 text-lg font-bold">
+          <h2 className="mt-md text-headline-md text-on-surface">
             {isExpired ? "Session Expired" : "Instagram Login Required"}
           </h2>
-          <p className="mt-1 text-sm text-gray-400">
+          <p className="mt-xs text-body-md text-on-surface-variant">
             {isExpired
               ? "Your Instagram session has expired. Paste a new Session ID to resume from where it stopped."
               : "To fetch accurate Instagram statistics, please paste your Instagram Session ID."}
           </p>
 
-          <form onSubmit={handleSubmit} className="mt-5">
+          <form onSubmit={handleSubmit} className="mt-md">
             <input
               value={sessionId}
               onChange={(e) => setSessionId(e.target.value)}
@@ -83,8 +83,8 @@ export default function SessionModal({ kind, onClose, onSave }: SessionModalProp
               className="input-dark font-mono text-xs"
               autoFocus
             />
-            {error && <p className="mt-2 text-xs text-danger">{error}</p>}
-            <button type="submit" disabled={saving} className="btn-primary mt-4 w-full">
+            {error && <p className="mt-2 text-xs text-error">{error}</p>}
+            <button type="submit" disabled={saving} className="btn-primary mt-md w-full">
               {saving ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" /> Validating...
@@ -98,9 +98,9 @@ export default function SessionModal({ kind, onClose, onSave }: SessionModalProp
             </button>
           </form>
 
-          <p className="mt-4 text-[11px] leading-relaxed text-gray-600">
-            How to get it: login to instagram.com in Chrome → F12 → Application
-            → Cookies → instagram.com → copy the value of <code>sessionid</code>.
+          <p className="mt-md text-[11px] leading-relaxed text-outline">
+            How to get it: login to instagram.com in Chrome &rarr; F12 &rarr; Application
+            &rarr; Cookies &rarr; instagram.com &rarr; copy the value of <code className="text-on-surface-variant">sessionid</code>.
             Your session is encrypted and never shown again.
           </p>
         </motion.div>

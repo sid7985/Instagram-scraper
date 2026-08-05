@@ -7,34 +7,39 @@ interface StatCardProps {
   title: string;
   value: string | number;
   icon: LucideIcon;
-  accent?: "accent" | "success" | "danger" | "gray";
+  accent?: "primary" | "success" | "danger" | "gray";
   sub?: string;
 }
 
-const ACCENTS: Record<string, string> = {
-  accent: "text-accent bg-accent/10",
-  success: "text-success bg-success/10",
-  danger: "text-danger bg-danger/10",
-  gray: "text-gray-300 bg-gray-500/10",
+const ACCENTS: Record<string, { text: string; bg: string; glow?: string }> = {
+  primary: { text: "text-primary", bg: "bg-primary/10" },
+  success: { text: "text-emerald-500", bg: "bg-emerald-500/10", glow: "bg-emerald-500/10" },
+  danger: { text: "text-rose-500", bg: "bg-rose-500/10", glow: "bg-rose-500/10" },
+  gray: { text: "text-on-surface-variant", bg: "bg-surface-container-high" },
 };
 
-export default function StatCard({ title, value, icon: Icon, accent = "accent", sub }: StatCardProps) {
+export default function StatCard({ title, value, icon: Icon, accent = "primary", sub }: StatCardProps) {
+  const colors = ACCENTS[accent] || ACCENTS.primary;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card p-5"
+      className="surface-card rounded-xl p-md flex flex-col justify-between relative overflow-hidden"
     >
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
+      {colors.glow && (
+        <div className={`absolute -right-4 -top-4 w-24 h-24 ${colors.glow} rounded-full blur-xl`} />
+      )}
+      <div className="flex justify-between items-start mb-md relative z-10">
+        <span className="text-label-md text-on-surface-variant uppercase tracking-wider">
           {title}
-        </p>
-        <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${ACCENTS[accent]}`}>
-          <Icon className="h-4 w-4" />
-        </div>
+        </span>
+        <Icon className={`h-5 w-5 ${colors.text} opacity-80`} />
       </div>
-      <p className="mt-2 text-2xl font-bold">{value}</p>
-      {sub && <p className="mt-1 text-xs text-gray-500">{sub}</p>}
+      <div className="relative z-10">
+        <span className="font-mono text-metric-xl text-on-background">{value}</span>
+        {sub && <p className="mt-1 text-xs text-on-surface-variant">{sub}</p>}
+      </div>
     </motion.div>
   );
 }

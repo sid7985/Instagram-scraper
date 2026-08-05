@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FileSpreadsheet, UploadCloud } from "lucide-react";
+import { FileSpreadsheet, Table2, UploadCloud } from "lucide-react";
 
 interface UploadDropzoneProps {
   fileName: string | null;
@@ -27,8 +27,11 @@ export default function UploadDropzone({ fileName, onFile, disabled }: UploadDro
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="card p-1"
+      className="surface-card rounded-xl p-md flex flex-col items-center justify-center min-h-[400px] border-dashed border-2 hover:border-primary transition-all duration-300 group cursor-pointer relative overflow-hidden"
     >
+      {/* Subtle background glow */}
+      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
       <button
         type="button"
         disabled={disabled}
@@ -43,32 +46,41 @@ export default function UploadDropzone({ fileName, onFile, disabled }: UploadDro
           setDragging(false);
           handleFiles(e.dataTransfer.files);
         }}
-        className={`flex w-full flex-col items-center justify-center gap-3 rounded-[14px] border-2 border-dashed px-6 py-12 transition disabled:cursor-not-allowed disabled:opacity-50 ${
-          dragging
-            ? "border-accent bg-accent/5"
-            : "border-border bg-[#101010] hover:border-accent/60"
-        }`}
+        className="flex flex-col items-center text-center z-10 relative w-full disabled:cursor-not-allowed disabled:opacity-50"
       >
         {fileName ? (
           <>
-            <FileSpreadsheet className="h-10 w-10 text-success" />
-            <p className="text-sm font-semibold">{fileName}</p>
-            <p className="text-xs text-gray-500">Click to replace</p>
+            <div className="w-16 h-16 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center mb-md group-hover:scale-110 group-hover:border-primary/50 transition-transform duration-300">
+              <FileSpreadsheet className="h-8 w-8 text-emerald-500" />
+            </div>
+            <h3 className="text-headline-sm text-on-surface mb-xs">{fileName}</h3>
+            <p className="text-body-md text-on-surface-variant max-w-sm mb-lg">Click to replace with another file</p>
           </>
         ) : (
           <>
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
-              <UploadCloud className="h-7 w-7 text-accent" />
+            <div className="w-16 h-16 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center mb-md group-hover:scale-110 group-hover:border-primary/50 transition-transform duration-300">
+              <Table2 className="h-8 w-8 text-primary" />
             </div>
-            <p className="text-sm font-semibold text-gray-200">
-              Drop your Excel file here
+            <h3 className="text-headline-sm text-on-surface mb-xs">Upload Excel Data</h3>
+            <p className="text-body-md text-on-surface-variant max-w-sm mb-lg">
+              Drag and drop your .xlsx or .csv file containing target URLs, or browse your local files.
             </p>
-            <p className="text-xs text-gray-500">
-              or click to browse · .xlsx / .xls · one column of Instagram URLs
-            </p>
+            <div className="flex gap-sm">
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  inputRef.current?.click();
+                }}
+              >
+                Browse File
+              </button>
+            </div>
           </>
         )}
       </button>
+
       <input
         ref={inputRef}
         type="file"
