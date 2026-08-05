@@ -1,0 +1,12 @@
+{
+  "build": {
+    "steps": [
+      {
+        "name": "global-install",
+        "commands": [
+          "pip install --break-system-packages -r requirements.txt"
+        ]
+      }
+    ]
+  }
+}
