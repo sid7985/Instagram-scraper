@@ -1,0 +1,17 @@
+{
+  "build": {
+    "steps": [
+      {
+        "name": "install",
+        "commands": [
+          "cd backend && python -m venv /app/.venv",
+          "cd backend && /app/.venv/bin/pip install -r requirements.txt"
+        ]
+      }
+    ]
+  },
+  "deploy": {
+    "startCommand": "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT",
+    "variables": {}
+  }
+}
