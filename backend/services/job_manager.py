@@ -176,7 +176,7 @@ class Job:
             }
             if row.url in self.pending:
                 self.pending.remove(row.url)
-        self.log("error", f"Row {row.excel_row}: {error.error_type.value}")
+        self.log("error", f"Row {row.excel_row}: {error.error_type.value} - {error.message}")
 
     def _fail_pending(self, reason: str) -> None:
         for url in list(self.pending):

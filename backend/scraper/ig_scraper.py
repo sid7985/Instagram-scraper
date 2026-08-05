@@ -87,11 +87,13 @@ def classify_exception(exc: Exception, url: str) -> ScrapeError:
         return ScrapeError(ScrapeErrorType.PRIVATE_ACCOUNT, message)
     if isinstance(exc, instaloader.exceptions.QueryReturnedNotFoundException):
         return ScrapeError(ScrapeErrorType.NOT_FOUND, message)
+    if isinstance(exc, instaloader.exceptions.QueryReturnedForbiddenException):
+        return ScrapeError(ScrapeErrorType.SESSION_EXPIRED, message)
     if isinstance(exc, instaloader.exceptions.QueryReturnedBadRequestException):
         if "wait a few minutes" in message.lower() or "too many" in message.lower():
             return ScrapeError(ScrapeErrorType.RATE_LIMITED, message)
         return ScrapeError(ScrapeErrorType.SESSION_EXPIRED, message)
-    if isinstance(exc, instaloader.exceptions.JSONQueryTooDeepException):
+    if isinstance(exc, instaloader.exceptions.TooManyRequestsException):
         return ScrapeError(ScrapeErrorType.RATE_LIMITED, message)
     if isinstance(exc, instaloader.exceptions.ProfileNotExistsException):
         return ScrapeError(ScrapeErrorType.NOT_FOUND, message)
