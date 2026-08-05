@@ -147,7 +147,7 @@ class Job:
             self.current_username = None
         self.log("info", f"Fetching row {row.excel_row}: {row.url[:60]}")
 
-        data = scraper.fetch_post(row.url)
+        data = scraper.fetch(row.url)
         data["status"] = STATUS_OK
         data["error"] = ""
 
