@@ -31,71 +31,67 @@ export default function Header({ loggedIn, onManageSession, activeView, onNaviga
   return (
     <>
       {/* Top App Bar */}
-      <header className="sticky top-0 z-50 flex justify-between items-center px-4 sm:px-6 lg:px-margin-desktop h-14 sm:h-16 w-full bg-background/80 backdrop-blur-md border-b border-outline-variant">
-        <div className="flex items-center gap-2 sm:gap-md min-w-0">
+      <header className="sticky top-0 z-50 flex justify-between items-center px-4 lg:px-margin-desktop h-12 lg:h-14 w-full bg-background/80 backdrop-blur-md border-b border-outline-variant">
+        <div className="flex items-center gap-2 min-w-0">
           <button
             onClick={() => setMobileOpen(true)}
-            className="lg:hidden p-xs text-on-surface-variant hover:text-primary transition-colors shrink-0"
+            className="lg:hidden p-1 text-on-surface-variant hover:text-primary transition-colors shrink-0"
           >
-            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+            <Menu className="h-5 w-5" />
           </button>
-          <h1 className="text-headline-sm sm:text-headline-md font-bold text-on-background tracking-tight truncate">
+          <h1 className="text-sm sm:text-base font-bold text-on-background tracking-tight truncate">
             Instagram Analytics
           </h1>
         </div>
-        <div className="flex items-center gap-sm shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={onManageSession}
-            className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high"
+            className="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors rounded-md hover:bg-surface-container-high"
             title="Manage session"
           >
-            <span
-              className={`h-2 w-2 rounded-full ${
-                loggedIn ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-danger"
-              }`}
-            />
+            <span className={`h-1.5 w-1.5 rounded-full ${loggedIn ? "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" : "bg-danger"}`} />
             {loggedIn ? (
-              <>
-                <BadgeCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-500" />
-                <span className="hidden sm:inline">Logged In</span>
-              </>
+              <span className="hidden sm:flex items-center gap-1">
+                <BadgeCheck className="h-3.5 w-3.5 text-emerald-500" />
+                Logged In
+              </span>
             ) : (
-              <span className="hidden xs:inline">Session Required</span>
+              <span className="hidden sm:inline">Session Required</span>
             )}
           </button>
         </div>
       </header>
 
       {/* Desktop Sidebar */}
-      <nav className="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface pt-20 pb-lg z-40">
-        <div className="px-md mb-lg">
-          <h2 className="text-headline-sm text-on-surface">Pro Analytics</h2>
-          <p className="text-label-md text-on-surface-variant mt-xs">Agency Account</p>
+      <nav className="hidden lg:flex flex-col h-screen w-52 fixed left-0 top-0 border-r border-outline-variant bg-surface pt-16 pb-6 z-40">
+        <div className="px-4 mb-4">
+          <h2 className="text-sm font-semibold text-on-surface">Pro Analytics</h2>
+          <p className="text-[10px] text-on-surface-variant">Agency Account</p>
         </div>
-        <div className="flex-1 flex flex-col gap-xs px-sm">
+        <div className="flex-1 flex flex-col gap-0.5 px-2">
           {NAV_ITEMS.map((item) => {
             const isActive = activeView === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`flex items-center gap-base px-md py-sm rounded-r-lg transition-all ${
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-r-lg transition-all text-left ${
                   isActive
                     ? "text-primary border-l-2 border-primary bg-primary/10"
                     : "text-on-surface-variant hover:bg-surface-container-high"
                 }`}
               >
                 <item.icon
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                   style={isActive ? { fill: "currentColor" } : undefined}
                 />
-                <span className="text-label-md">{item.label}</span>
+                <span className="text-xs">{item.label}</span>
               </button>
             );
           })}
         </div>
-        <div className="px-md mt-auto">
-          <button className="w-full py-sm bg-transparent border border-outline-variant text-on-surface text-label-md rounded hover:border-on-surface transition-colors">
+        <div className="px-3 mt-auto">
+          <button className="w-full py-1.5 bg-transparent border border-outline-variant text-on-surface text-[10px] rounded hover:border-on-surface transition-colors">
             Upgrade Plan
           </button>
         </div>

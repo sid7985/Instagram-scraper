@@ -78,14 +78,14 @@ function MetricCheckbox({
   onChange: (v: boolean) => void;
 }) {
   return (
-    <label className="flex items-center gap-3 cursor-pointer group py-1">
+    <label className="flex items-center gap-2 cursor-pointer group py-0.5">
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="w-5 h-5 rounded border-outline-variant bg-surface-container-lowest text-primary focus:ring-primary focus:ring-offset-0 focus:ring-offset-background shrink-0"
+        className="w-4 h-4 rounded border-outline-variant bg-surface-container-lowest text-primary focus:ring-primary focus:ring-offset-0 focus:ring-offset-background shrink-0"
       />
-      <span className="text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">
+      <span className="text-xs text-on-surface-variant group-hover:text-on-surface transition-colors">
         {label}
       </span>
     </label>
@@ -116,17 +116,17 @@ export default function SettingsPanel({ metrics, engine, onChange }: SettingsPan
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="space-y-4 sm:space-y-6"
+      className="space-y-3"
     >
       {/* Post & Reel Metrics */}
-      <div className="surface-card rounded-xl p-3 sm:p-md">
-        <div className="flex items-center gap-2 sm:gap-sm mb-4 sm:mb-lg border-b border-outline-variant pb-2 sm:pb-sm">
-          <Film className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-          <h2 className="text-headline-sm text-on-surface">Post & Reel Metrics</h2>
+      <div className="surface-card rounded-xl px-3 py-2.5">
+        <div className="flex items-center gap-2 mb-2 pb-2 border-b border-outline-variant">
+          <Film className="h-3.5 w-3.5 text-primary" />
+          <h2 className="text-xs font-semibold text-on-surface">Post & Reel Metrics</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-3 sm:gap-y-md gap-x-4 sm:gap-x-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-4">
           <MetricCheckbox label="Views" checked={localMetrics.postReel.views} onChange={(v) => updatePostReel("views", v)} />
           <MetricCheckbox label="Likes" checked={localMetrics.postReel.likes} onChange={(v) => updatePostReel("likes", v)} />
           <MetricCheckbox label="Comments Count" checked={localMetrics.postReel.comments} onChange={(v) => updatePostReel("comments", v)} />
@@ -139,12 +139,12 @@ export default function SettingsPanel({ metrics, engine, onChange }: SettingsPan
       </div>
 
       {/* Profile Metrics */}
-      <div className="surface-card rounded-xl p-3 sm:p-md">
-        <div className="flex items-center gap-2 sm:gap-sm mb-4 sm:mb-lg border-b border-outline-variant pb-2 sm:pb-sm">
-          <User className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-          <h2 className="text-headline-sm text-on-surface">Profile Metrics</h2>
+      <div className="surface-card rounded-xl px-3 py-2.5">
+        <div className="flex items-center gap-2 mb-2 pb-2 border-b border-outline-variant">
+          <User className="h-3.5 w-3.5 text-primary" />
+          <h2 className="text-xs font-semibold text-on-surface">Profile Metrics</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-3 sm:gap-y-md gap-x-4 sm:gap-x-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-4">
           <MetricCheckbox label="Followers" checked={localMetrics.profile.followers} onChange={(v) => updateProfile("followers", v)} />
           <MetricCheckbox label="Following" checked={localMetrics.profile.following} onChange={(v) => updateProfile("following", v)} />
           <MetricCheckbox label="Biography" checked={localMetrics.profile.biography} onChange={(v) => updateProfile("biography", v)} />
@@ -155,10 +155,10 @@ export default function SettingsPanel({ metrics, engine, onChange }: SettingsPan
       </div>
 
       {/* Engagement Rate */}
-      <div className="surface-card rounded-xl p-3 sm:p-md">
-        <div className="flex items-center gap-2 sm:gap-sm mb-4 sm:mb-lg border-b border-outline-variant pb-2 sm:pb-sm">
-          <Cpu className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-          <h2 className="text-headline-sm text-on-surface">Computed Metrics</h2>
+      <div className="surface-card rounded-xl px-3 py-2.5">
+        <div className="flex items-center gap-2 mb-2 pb-2 border-b border-outline-variant">
+          <Cpu className="h-3.5 w-3.5 text-primary" />
+          <h2 className="text-xs font-semibold text-on-surface">Computed Metrics</h2>
         </div>
         <MetricCheckbox
           label="Engagement Rate (Likes+Comments / Followers x 100)"
@@ -172,17 +172,17 @@ export default function SettingsPanel({ metrics, engine, onChange }: SettingsPan
       </div>
 
       {/* Execution Engine */}
-      <div className="surface-card rounded-xl p-3 sm:p-md">
-        <div className="flex items-center gap-2 sm:gap-sm mb-4 sm:mb-lg border-b border-outline-variant pb-2 sm:pb-sm">
-          <Cpu className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-          <h2 className="text-headline-sm text-on-surface">Execution Engine</h2>
+      <div className="surface-card rounded-xl px-3 py-2.5">
+        <div className="flex items-center gap-2 mb-2 pb-2 border-b border-outline-variant">
+          <Cpu className="h-3.5 w-3.5 text-primary" />
+          <h2 className="text-xs font-semibold text-on-surface">Execution Engine</h2>
         </div>
-        <div className="flex flex-col gap-4 sm:gap-lg">
+        <div className="flex flex-col gap-3">
           {/* Concurrency */}
           <div>
-            <div className="flex justify-between items-center mb-sm">
-              <label className="text-label-md text-on-surface-variant">Concurrency Workers</label>
-              <span className="text-body-md text-primary font-bold">{localEngine.concurrency}</span>
+            <div className="flex justify-between items-center mb-1">
+              <label className="text-[11px] text-on-surface-variant">Concurrency Workers</label>
+              <span className="text-xs text-primary font-bold">{localEngine.concurrency}</span>
             </div>
             <input
               type="range"
@@ -192,7 +192,7 @@ export default function SettingsPanel({ metrics, engine, onChange }: SettingsPan
               onChange={(e) => updateEngine("concurrency", parseInt(e.target.value))}
               className="w-full h-1 bg-outline-variant rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
-            <div className="flex justify-between mt-xs text-label-md text-outline">
+            <div className="flex justify-between mt-0.5 text-[10px] text-outline">
               <span>1 (Safe)</span>
               <span>10 (Aggressive)</span>
             </div>
@@ -200,43 +200,42 @@ export default function SettingsPanel({ metrics, engine, onChange }: SettingsPan
 
           {/* Delay */}
           <div>
-            <label className="text-label-md text-on-surface-variant block mb-sm">Request Delay (Seconds)</label>
-            <div className="flex items-center gap-2 sm:gap-sm">
+            <label className="text-[11px] text-on-surface-variant block mb-1">Request Delay (Seconds)</label>
+            <div className="flex items-center gap-2">
               <input
                 type="number"
                 min="0"
                 max="60"
                 value={localEngine.delayMin}
                 onChange={(e) => updateEngine("delayMin", parseInt(e.target.value) || 0)}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded text-on-surface text-body-md focus:border-primary focus:ring-1 focus:ring-primary px-2 sm:px-sm py-1.5 sm:py-xs"
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded text-on-surface text-xs focus:border-primary focus:ring-1 focus:ring-primary px-2 py-1.5"
               />
-              <span className="text-on-surface-variant shrink-0">to</span>
+              <span className="text-on-surface-variant shrink-0 text-xs">to</span>
               <input
                 type="number"
                 min="0"
                 max="60"
                 value={localEngine.delayMax}
                 onChange={(e) => updateEngine("delayMax", parseInt(e.target.value) || 0)}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded text-on-surface text-body-md focus:border-primary focus:ring-1 focus:ring-primary px-2 sm:px-sm py-1.5 sm:py-xs"
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded text-on-surface text-xs focus:border-primary focus:ring-1 focus:ring-primary px-2 py-1.5"
               />
             </div>
-            <p className="text-label-md text-outline mt-xs">Randomized delay prevents rate limiting.</p>
           </div>
         </div>
       </div>
 
       {/* Export Configuration */}
-      <div className="surface-card rounded-xl p-3 sm:p-md">
-        <div className="flex items-center gap-2 sm:gap-sm mb-4 sm:mb-lg border-b border-outline-variant pb-2 sm:pb-sm">
-          <Download className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-          <h2 className="text-headline-sm text-on-surface">Export Configuration</h2>
+      <div className="surface-card rounded-xl px-3 py-2.5">
+        <div className="flex items-center gap-2 mb-2 pb-2 border-b border-outline-variant">
+          <Download className="h-3.5 w-3.5 text-primary" />
+          <h2 className="text-xs font-semibold text-on-surface">Export Configuration</h2>
         </div>
         <div>
-          <label className="text-label-md text-on-surface-variant block mb-sm">Primary Export Format</label>
+          <label className="text-[11px] text-on-surface-variant block mb-1">Primary Export Format</label>
           <select
             value={localEngine.exportFormat}
             onChange={(e) => updateEngine("exportFormat", e.target.value)}
-            className="w-full bg-surface-container-lowest border border-outline-variant rounded text-on-surface text-body-md focus:border-primary focus:ring-1 focus:ring-primary px-2 sm:px-sm py-2 sm:py-sm appearance-none cursor-pointer"
+            className="w-full bg-surface-container-lowest border border-outline-variant rounded text-on-surface text-xs focus:border-primary focus:ring-1 focus:ring-primary px-2 py-1.5 appearance-none cursor-pointer"
           >
             <option value="xlsx">Excel (.xlsx)</option>
             <option value="csv">CSV (.csv)</option>

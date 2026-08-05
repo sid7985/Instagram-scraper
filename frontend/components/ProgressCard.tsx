@@ -20,29 +20,26 @@ export default function ProgressCard({
 }: ProgressCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="surface-card rounded-xl p-3 sm:p-md flex flex-col gap-sm"
+      className="surface-card rounded-xl px-3 py-2.5 flex flex-col gap-1.5"
     >
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1">
-        <div className="min-w-0">
-          <h2 className="text-headline-sm sm:text-headline-md text-on-background">
-            {running ? "Extracting Data..." : "Progress"}
-          </h2>
-          <p className="text-body-md text-on-surface-variant mt-xs truncate">
-            Row {currentRow} / {total}
-            {currentUsername && (
-              <>
-                <span className="mx-2 hidden sm:inline">&bull;</span>
-                <span className="hidden sm:inline">Current: @{currentUsername}</span>
-              </>
-            )}
-          </p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xs font-medium text-on-surface">
+            {running ? "Extracting..." : "Progress"}
+          </span>
+          <span className="text-[10px] text-on-surface-variant truncate">
+            Row {currentRow}/{total}
+          </span>
+          {currentUsername && (
+            <span className="text-[10px] text-primary truncate hidden sm:inline">@{currentUsername}</span>
+          )}
         </div>
-        <div className="font-mono text-[32px] sm:text-[40px] md:text-metric-xl leading-none text-primary shrink-0">{percent}%</div>
+        <span className="font-mono text-lg sm:text-xl text-primary shrink-0">{percent}%</span>
       </div>
 
-      <div className="h-3 sm:h-4 bg-surface-container-lowest rounded-full overflow-hidden mt-sm border border-outline-variant/50">
+      <div className="h-2 bg-surface-container-lowest rounded-full overflow-hidden border border-outline-variant/50">
         <motion.div
           className="h-full bg-primary rounded-full transition-all duration-300 ease-out"
           style={{
@@ -56,19 +53,12 @@ export default function ProgressCard({
         />
       </div>
 
-      <div className="mt-sm flex items-center gap-sm text-xs text-on-surface-variant">
-        {currentUsername ? (
-          <span className="inline-flex items-center gap-1 text-on-surface">
-            <AtSign className="h-3 w-3 text-primary" />
-            @{currentUsername}
-          </span>
-        ) : running ? (
-          <span className="inline-flex items-center gap-1">
-            <Loader2 className="h-3 w-3 animate-spin text-primary" />
-            Fetching...
-          </span>
-        ) : null}
-      </div>
+      {currentUsername && (
+        <div className="flex items-center gap-1 text-[10px] text-on-surface-variant">
+          <AtSign className="h-2.5 w-2.5 text-primary" />
+          <span className="truncate">@{currentUsername}</span>
+        </div>
+      )}
     </motion.div>
   );
 }

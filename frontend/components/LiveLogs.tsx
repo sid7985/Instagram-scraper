@@ -27,26 +27,26 @@ export default function LiveLogs({ logs }: { logs: LogEntry[] }) {
   }, [logs.length]);
 
   return (
-    <div className="surface-card rounded-xl flex flex-col overflow-hidden h-48 sm:h-56 md:h-64">
-      <div className="bg-surface-variant px-3 sm:px-md py-2 sm:py-sm border-b border-outline-variant flex justify-between items-center">
-        <span className="text-label-md text-on-surface-variant uppercase flex items-center gap-2">
-          <Terminal className="h-4 w-4 text-primary" /> Live Logs
+    <div className="surface-card rounded-xl flex flex-col overflow-hidden h-40 sm:h-48">
+      <div className="bg-surface-variant px-3 py-1.5 border-b border-outline-variant flex justify-between items-center">
+        <span className="text-[10px] text-on-surface-variant uppercase flex items-center gap-1.5">
+          <Terminal className="h-3 w-3 text-primary" /> Live Logs
         </span>
-        <div className="flex gap-2">
-          <div className="w-2 h-2 rounded-full bg-outline-variant" />
-          <div className="w-2 h-2 rounded-full bg-outline-variant" />
-          <div className="w-2 h-2 rounded-full bg-outline-variant" />
+        <div className="flex gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-outline-variant" />
+          <div className="w-1.5 h-1.5 rounded-full bg-outline-variant" />
+          <div className="w-1.5 h-1.5 rounded-full bg-outline-variant" />
         </div>
       </div>
-      <div className="p-2 sm:p-md font-mono text-xs sm:text-sm text-on-surface-variant flex-grow overflow-y-auto overflow-x-auto bg-surface-container-lowest space-y-1 sm:space-y-2 flex flex-col justify-end">
+      <div className="px-2 py-1.5 font-mono text-[10px] sm:text-xs text-on-surface-variant flex-grow overflow-y-auto overflow-x-auto bg-surface-container-lowest space-y-0.5 flex flex-col justify-end">
         {logs.length === 0 ? (
-          <p className="text-outline">Initializing batch process...</p>
+          <p className="text-outline">Initializing...</p>
         ) : (
           logs.map((log, i) => (
-            <div key={i} className={`flex items-start gap-1.5 sm:gap-2 py-0.5 ${LEVEL_STYLES[log.level]}`}>
-              <span className="shrink-0 text-outline text-[10px] sm:text-xs">{log.ts}</span>
-              <span className="mt-px shrink-0 text-[10px] sm:text-xs">{LEVEL_PREFIX[log.level]}</span>
-              <span className="break-all sm:break-normal">{log.message}</span>
+            <div key={i} className={`flex items-start gap-1 py-px ${LEVEL_STYLES[log.level]}`}>
+              <span className="shrink-0 text-outline">{log.ts}</span>
+              <span className="shrink-0">{LEVEL_PREFIX[log.level]}</span>
+              <span className="break-all">{log.message}</span>
             </div>
           ))
         )}
