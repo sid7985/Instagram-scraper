@@ -23,6 +23,7 @@ import StatCard from "@/components/StatCard";
 import UploadDropzone from "@/components/UploadDropzone";
 
 import {
+  API_BASE,
   downloadUrl,
   getJob,
   getSession,
@@ -37,6 +38,7 @@ const TERMINAL_STATES = ["done", "failed", "cancelled"];
 
 export default function Dashboard() {
   const [session, setSession] = useState<SessionInfo>({ set: false, valid: null });
+  const [apiReachable, setApiReachable] = useState<boolean | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
@@ -82,8 +84,14 @@ export default function Dashboard() {
 
   useEffect(() => {
     getSession()
-      .then(setSession)
-      .catch(() => setSession({ set: false, valid: null }));
+      .then((info) => {
+        setSession(info);
+        setApiReachable(true);
+      })
+      .catch(() => {
+        setSession({ set: false, valid: null });
+        setApiReachable(false);
+      });
     return stopPolling;
   }, [stopPolling]);
 
@@ -166,6 +174,24 @@ export default function Dashboard() {
         loggedIn={session.set}
         onManageSession={() => setModal("required")}
       />
+
+      {apiReachable === false && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="card mb-6 flex items-center gap-3 border-danger/40 bg-danger/10 px-4 py-3"
+        >
+          <XCircle className="h-4 w-4 shrink-0 text-danger" />
+          <div>
+            <p className="text-sm font-semibold text-danger">Backend unreachable</p>
+            <p className="text-xs text-gray-400">
+              {API_BASE
+                ? `Could not reach ${API_BASE}. Check the Render service is running.`
+                : "No API URL configured. Set NEXT_PUBLIC_API_URL on Vercel."}
+            </p>
+          </div>
+        </motion.div>
+      )}
 
       {error && (
         <motion.div
