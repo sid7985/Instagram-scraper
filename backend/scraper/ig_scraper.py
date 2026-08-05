@@ -137,31 +137,31 @@ class InstagramScraper:
             max_connection_attempts=2,
         )
         session = loader.context._session
+        # Bootstrap anonymous cookies (csrftoken, mid) BEFORE setting the
+        # sessionid — instaloader's GraphQL queries require a csrftoken cookie.
+        try:
+            session.get("https://www.instagram.com/", timeout=15)
+        except Exception:
+            pass
         session.cookies.set("sessionid", self.session_id, domain=".instagram.com")
-        session.cookies.set("ds_user_id", self.session_id.split("%3A")[0], domain=".instagram.com")
+        user_id = self.session_id.split("%3A")[0]
+        if user_id.isdigit():
+            session.cookies.set("ds_user_id", user_id, domain=".instagram.com")
+        session.headers.update({"User-Agent": random.choice(USER_AGENTS)})
         loader.context._session = session
-        loader.context._session.headers.update(
-            {"User-Agent": random.choice(USER_AGENTS), "X-CSRFToken": "missing"}
-        )
         return loader
 
     def rotate_user_agent(self) -> None:
         self._loader.context._session.headers["User-Agent"] = random.choice(USER_AGENTS)
 
     def validate_session(self) -> bool:
-        """Fast session check via the lightweight mobile API endpoint."""
+        """Return True if the sessionid is valid, using instaloader's test_login."""
         try:
-            resp = self._loader.context._session.get(
-                "https://i.instagram.com/api/v1/accounts/current_user/?edit=true",
-                timeout=15,
-            )
-            if resp.status_code == 200:
-                return True
-            if resp.status_code == 429:
-                return True  # rate-limited: cannot verify, don't block the user
-            return False
+            return self._loader.test_login() is not None
+        except instaloader.exceptions.TooManyRequestsException:
+            return True  # rate-limited: cannot verify, don't block the user
         except Exception:
-            return True
+            return False
 
     # ------------------------------------------------------------------ #
     # Unified entry point — auto-detects profile vs post
