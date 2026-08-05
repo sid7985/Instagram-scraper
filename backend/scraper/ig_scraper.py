@@ -149,10 +149,16 @@ class InstagramScraper:
         self._loader.context._session.headers["User-Agent"] = random.choice(USER_AGENTS)
 
     def validate_session(self) -> bool:
+        """Fast session check via the lightweight mobile API endpoint."""
         try:
-            instaloader.Profile.from_username(self._loader.context, "instagram")
-            return True
-        except instaloader.exceptions.LoginRequiredException:
+            resp = self._loader.context._session.get(
+                "https://i.instagram.com/api/v1/accounts/current_user/?edit=true",
+                timeout=15,
+            )
+            if resp.status_code == 200:
+                return True
+            if resp.status_code == 429:
+                return True  # rate-limited: cannot verify, don't block the user
             return False
         except Exception:
             return True
