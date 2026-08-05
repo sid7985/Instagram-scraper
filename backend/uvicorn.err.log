@@ -1,0 +1,5 @@
+INFO:     Started server process [23012]
+INFO:     Waiting for application startup.
+2026-08-05 15:54:21 | INFO     | instagram_analyzer | Instagram Analytics backend started
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
